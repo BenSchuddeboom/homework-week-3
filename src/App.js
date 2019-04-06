@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { addModel } from './actions/addModel'
+import { connect } from 'react-redux'
 import './App.css';
 
 const data = {
@@ -29,10 +31,14 @@ class App extends Component {
 
   }
 
-  updateSelection = (event) => {
-    this.setState({
-      value: event.target.value
-    })
+  handleClick = () => {
+  	this.props.addModel(this.state.value)
+  }
+
+  updateSelection = (evt) => {
+  	this.setState({
+  		value: data[evt.target.value]
+  	})
   }
 
   renderOptions = (data) => {
@@ -53,9 +59,10 @@ class App extends Component {
   				<option value="">-- Pick a model --</option>
   				{this.renderOptions(data)}
   			</select>
+  			<button onClick={this.handleClick}>Add</button>
   		</div>
   	);
   }
 }
 
-export default App;
+export default connect(null, { addModel })(App)
